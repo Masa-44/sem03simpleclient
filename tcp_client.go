@@ -5,7 +5,7 @@ import (
 	"net"
 	"os"
 
-	"github.com/Masa-44/sem03simpleclient" // Anta at dette er importen for den fiktive mycrypt-pakken
+	"github.com/Masa-44/mycrypt" // Anta at dette er importen for den fiktive mycrypt-pakken
 )
 
 func main() {
