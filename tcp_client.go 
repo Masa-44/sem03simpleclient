@@ -17,7 +17,7 @@ func main() {
 
 	log.Println("os.Args[1] = ", os.Args[1])
 
-	dekryptertMelding := mycrypt.Dekrypter([]rune(os.Args[1]), mycrypt.ALF_SEM03, 4)
+	dekryptertMelding := mycrypt.Krypter([]rune(os.Args[1]), mycrypt.ALF_SEM03, 4)
 	log.Println("Kryptert melding: ", string(dekryptertMelding))
 
 	_, err = conn.Write([]byte(string(dekryptertMelding)))
