@@ -1,28 +1,36 @@
 package main
 
 import (
-	"net"
 	"log"
+	"net"
 	"os"
+
+	"github.com/Masa-44/sem03simpleclient" // Anta at dette er importen for den fiktive mycrypt-pakken
 )
 
 func main() {
-	conn, err := net.Dial("tcp", "127.0.0.1:")
+	conn, err := net.Dial("tcp", "172.17.0.3:8300")
 	if err != nil {
 		log.Fatal(err)
 	}
-    
+
 	log.Println("os.Args[1] = ", os.Args[1])
 
- 	_, err = conn.Write([]byte(os.Args[1]))
+	// Krypterer input fra kommandolinjen med mycrypt-pakken
+	kryptertMelding := mycrypt.Krypter([]rune(os.Args[1]), mycrypt.ALF_SEM03, 4)
+	log.Println("Kryptert melding: ", string(kryptertMelding))
+
+	// Sender de krypterte dataene til serveren
+	_, err = conn.Write([]byte(string(kryptertMelding)))
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	buf := make([]byte, 1024)
 	n, err := conn.Read(buf)
 	if err != nil {
 		log.Fatal(err)
-	} 
+	}
 	response := string(buf[:n])
-	log.Printf("reply from proxy: %s", response)
+	log.Printf("Svar fra server: %s", response)
 }
